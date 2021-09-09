@@ -18,7 +18,7 @@ RSpec.describe SpanningTrees do
       7,4 7,8
       8,9
     EOS
-    edges = edge_data.split(/\s+/).map { |e| e.split(',').map(&:to_i) }
+    edges = edge_data.split(/\s+/).map { |e| e.split(",").map(&:to_i) }
     g = RGL::DirectedAdjacencyGraph[*edges.flatten]
     expect(g.num_vertices).to eq(9)
     expect(g.num_edges).to eq(18)
@@ -27,9 +27,7 @@ RSpec.describe SpanningTrees do
     expect(g.adjacent_vertices(5)).to match_array([3, 4, 6, 7])
     dfs = g.dfs_iterator(1)
     traversal = []
-    until dfs.at_end?
-      traversal << dfs.forward
-    end
+    traversal << dfs.forward until dfs.at_end?
     expect(traversal).to eq([1, 6, 7, 8, 9, 4, 5, 3, 2])
   end
 
