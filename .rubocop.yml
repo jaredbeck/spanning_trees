@@ -1,0 +1,149 @@
+require:
+  - rubocop-packaging
+  - rubocop-performance
+  - rubocop-rspec
+
+# Please:
+#
+# - Comment any deviations from the Ruby Style Guide
+# - Alphabetize cops
+# - Only include permanent config; temporary goes in .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+# Avoid blank lines inside methods. They are a sign that the method is too big.
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+# Use exactly one space on each side of an operator. Do not align operators
+# because it makes the code harder to edit, and makes lines unnecessarily long.
+Layout/SpaceAroundOperators:
+  AllowForAlignment: false
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+# Not a useful metric compared to, e.g. `AbcSize`.
+Metrics/BlockLength:
+  Enabled: false
+
+# Not a useful metric compared to, e.g. `AbcSize`.
+Metrics/ClassLength:
+  Enabled: false
+
+# The number of lines in a method is not a useful metric compared to `AbcSize`.
+# It's common to have very long methods (> 50 lines) which are quite simple. For
+# example, a method that returns a long string with only a few interpolations.
+Metrics/MethodLength:
+  Enabled: false
+
+# Not a useful metric compared to, e.g. `AbcSize`.
+Metrics/ModuleLength:
+  Enabled: false
+
+# Heredocs are usually assigned to a variable or constant, which already has a
+# name, so naming the heredoc doesn't add much value.
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+# Too subtle to lint.
+# Two-letter param names are OK. Consider `send_email(to:, cc:)`.
+# Even one-letter names are OK. Consider `draw_point(x, y)`.
+Naming/MethodParameterName:
+  Enabled: false
+
+# This cop has low value to begin with. Also, secondarily, it does not allow
+# reasonable names like `rails_lt_6_0`.
+Naming/VariableNumber:
+  Enabled: false
+
+# A valuable optimization in production code, but not valuable in specs.
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - spec/**/*
+
+# This cop does not seem to work in rubocop-rspec 1.28.0
+RSpec/DescribeClass:
+  Enabled: false
+
+# This cop has a bug in 1.35.0
+# https://github.com/rubocop-hq/rubocop-rspec/issues/799
+RSpec/DescribedClass:
+  Enabled: false
+
+# Yes, ideally examples would be short. Is it possible to pick a limit and say,
+# "no example will ever be longer than this"? Hard to say. Sometimes they're
+# quite long.
+RSpec/ExampleLength:
+  Enabled: false
+
+# In an ideal world, each example has a single expectation. In the real world,
+# sometimes setup is a pain and you don't want to duplicate setup in multiple
+# examples, or make the specs more confusing with many nested `context`s, and
+# the practical thing is to have multiple expectations.
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# Please use semantic style, e.g. `do` when there's a side-effect, else `{}`.
+# The semantic style is too nuanced to lint, so the cop is disabled.
+Style/BlockDelimiters:
+  Enabled: false
+
+# Use double negation wherever it would otherwise be impractical to convert
+# a value to an actual boolean.
+Style/DoubleNegation:
+  Enabled: false
+
+# Avoid annotated tokens except in desperately complicated format strings.
+# In 99% of format strings they actually make it less readable.
+Style/FormatStringToken:
+  Enabled: false
+
+# The decision of when to use a guard clause to improve readability is subtle,
+# and it's not clear that it can be linted. Certainly, the default
+# `MinBodyLength` of 1 can actually hurt readability.
+Style/GuardClause:
+  Enabled: false
+
+# `hash.keys.each` is totally fine.
+Style/HashEachMethods:
+  Enabled: false
+
+# Only use postfix (modifier) conditionals for utterly simple statements.
+# As a rule of thumb, the entire statement should not exceed 60 chars.
+# Rubocop used to support this level of configuration, but no longer does.
+Style/IfUnlessModifier:
+  Enabled: false
+
+# Too subtle to lint. Use `format` for multiple variables. For single variables,
+# use either interpolation or concatenation, whichever is easier to read.
+Style/StringConcatenation:
+  Enabled: false
+
+# The Ruby Style Guide does not prescribe a particular quote character, only
+# that a project should pick one and be consistent. The decision has no
+# performance implications. Double quotes are slightly easier to read.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
